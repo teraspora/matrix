@@ -361,7 +361,7 @@ template {
   font-family: "FreeMono", monospace;
 }
 
-.wrapper {
+body {
     height: 100vh;
     background: #000;
     color: #0055ff;
@@ -387,5 +387,27 @@ template {
     color: #00ff34;
     font-size: 3vw;
     z-index: 256;
-    filter:blur(3px);
+    /*filter: blur(3px) drop-shadow(24px 16px 20px #fff);*/
+    -webkit-filter: blur(3px);
+    -o-filter: blur(3px);
+    filter: blur(3px);
 }
+
+#teletype {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    line-height: 1vh;
+}
+
+#block {
+    top: 0;
+    font-size: 6vw;
+    color: #fff;
+    -webkit-filter: blur(8px);
+    -o-filter: blur(8px);
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.2s ease-in;   
+}
+

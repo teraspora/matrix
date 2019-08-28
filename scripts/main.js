@@ -1,69 +1,39 @@
-const LINE_COUNT = 120;
+// `The Matrix` intro emulator 
+
+const PHRASE1 = `Call trans opt: received 2-19-98 13:24:18 REC: Log>`;
+const p1_chars = PHRASE1.split(``).map(char => {
+    let span = document.createElement(`span`);
+    span.innerText = char;
+    span.style.fontSize = `2.4vw`;
+    span.style.color = `#fff`;
+    span.style.filter = `blur(2px)`;
+    span.style.opacity = 1;
+    return span;
+});
+
+const LINE_COUNT = 40;
 const COL_COUNT = 28;
 let num_lines = makeNumLines(LINE_COUNT);     // an array of 50 num_line divs
-
-// const nums = document.querySelectorAll(`.nums`)[0];
-// const overlay = document.getElementById(`overlay`);     // text that fades in
-//  let timer = setInterval(frame, 40);
+const DROP_COUNT = 53;  // number of times lines drop before timer cleared
+let tick = 0;
+const block = document.getElementById(`block`);
+const teletype = document.getElementById(`teletype`);
 
 num_lines.forEach((line, i) => {
     document.body.appendChild(line);
     line.style.top = `${-i * line.clientHeight}px`;
 }) 
 
-setInterval(_ => {
+let clock = setInterval(_ => {
     for (let line of num_lines) {
         line.innerHTML = getRowOfRandomNums(COL_COUNT).innerHTML;
         line.style.top = incrementPixelValue(line.style.top, line.clientHeight);
     }
-  }, 100);
-
-// setInterval(_ => {
-//     num_lines = num_lines.map(line => {
-//         let row = getRowOfRandomNums(COL_COUNT);
-//         row.style.top = incrementPixelValue(line.style.top, parseInt(line.clientHeight));
-//         return row;
-//     });
-//   }, 100);
-
-// setInterval(_ => {
-//     num_lines = num_lines.map(line => {
-//         let row = getRowOfRandomNums(COL_COUNT);
-//         row.style.top = incrementPixelValue(line.style.top, line.clientHeight);
-//     });
-//   }, 100);
-
-// function frame() {
-//   if (i <= 1) {     /* test for finished */
-//     clearInterval(timer);
-//     setTimeout(_ => {
-//         digits[0].style.transform = ``;
-//     }, 800);
-//     setTimeout(_ => {
-//         digits[1].style.transform = ``;
-//     }, 1700);
-//     setTimeout(_ => {
-//         digits[2].style.transform = ``;
-//     }, 1100);
-//     setTimeout(_ => {
-//         digits[2].style.transform = ``;
-//     }, 2100);
-//     setTimeout(_ => {
-//         digits[1].style.borderRadius = `20px`;
-//     }, 3600);
-//     setTimeout(_ => {
-//         overlay.style.opacity = `1`;;
-//     }, 7100);
-//   }
-//   else {
-//     phi = (i - 1) * 400;
-//     digits[0].style.transform = `scale(${i}) rotate(${-phi}deg) translate(${162 * Math.sin(phi * 2) + 64}px, ${128 * Math.cos(phi * 2)}px)`;
-//     digits[1].style.transform = `scale(${16 * Math.sin((i - 1) * 8) + 1}) rotate(${phi}deg) translate(${512 * Math.sin(phi)}px, ${-512 * Math.cos(phi)}px)`;
-//     digits[2].style.transform = `scale(${phi / 90 + 1}) rotate(${-phi / 2}deg) translate(${-404 * Math.sin(phi)}px, ${808 * Math.cos(phi)}px)`;
-//     digits[1].style.borderRadius = `${12.5 * i + 20}%`;
-//     i-= 0.061;
-//   }
-// }
+    if (tick++ > DROP_COUNT) {
+        clearInterval(clock);
+        runPhase2();
+    }
+  }, 200);
 
 function makeNumLines(line_count = 1) {
     // create an array of `nums` divs
@@ -89,6 +59,17 @@ function getRowOfRandomNums(cols) {
     let spans = Array(cols).fill(0).map(x => {
         let span = document.createElement(`span`);
         span.innerText = Math.floor(Math.random() * 10).toString() + ` `;
+
+        let n = Math.random() * 100;
+        if (n > 3 && n < 15) {
+            if (n == 14) {
+                span.style.filter = `blur(5px)`;
+                span.style.color = `#dfffe2`;
+            }
+            else {
+                span.style.filter = `blur(${n}px)`;
+            }
+        }
         return span;
     });
     spans.forEach(span => row.appendChild(span));
@@ -96,3 +77,30 @@ function getRowOfRandomNums(cols) {
     return row;
 }
 
+function runPhase2() {
+    tick = 0;
+    block.style.opacity = 1;
+    clock = setInterval(_ => {
+        block.style.opacity = 1.1 - block.style.opacity;
+        if (tick++ >= 10) {
+            clearInterval(clock);
+            block.style.opacity = 1;
+            runPhase3();
+        }
+    }, 500);
+}
+
+function runPhase3() {
+    tick = 0;
+    clock = setInterval(_ => {
+        teletype.appendChild(p1_chars[tick++]);
+        if (tick >= p1_chars.length) {
+            clearInterval(clock);
+            runPhase4();
+        }
+    }, 100);
+}
+
+function runPhase4() {
+
+}
