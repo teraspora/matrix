@@ -1,20 +1,20 @@
 // `The Matrix` intro emulator 
 
-const PHRASE1 = `Call trans opt: received 2-19-98 13:24:18 REC: Log>`;
+const D = new Date();
+const TIME = D.toTimeString().slice(0, 8);
+const DATE = D.toLocaleDateString().replace(/\//g, `-`);
+const PHRASE1 = `Call trans opt: received. ${DATE} ${TIME} REC:Log>`;
+// const PHRASE1 = `Call trans opt: received. 2-19-98 13:24:18 REC:Log>`;
 const p1_chars = PHRASE1.split(``).map(char => {
     let span = document.createElement(`span`);
     span.innerText = char;
-    span.style.fontSize = `2.4vw`;
-    span.style.color = `#fff`;
-    span.style.filter = `blur(2px)`;
-    span.style.opacity = 1;
     return span;
 });
 
-const LINE_COUNT = 40;
+const LINE_COUNT = 30;
 const COL_COUNT = 28;
 let num_lines = makeNumLines(LINE_COUNT);     // an array of 50 num_line divs
-const DROP_COUNT = 53;  // number of times lines drop before timer cleared
+const DROP_COUNT = 43;  // number of times lines drop before timer cleared
 let tick = 0;
 const block = document.getElementById(`block`);
 const teletype = document.getElementById(`teletype`);
@@ -46,14 +46,6 @@ function incrementPixelValue(pxstr = `0px`, pxinc = 1, limit = 1200) {
     return pxint < limit ?`${(pxint).toString()}px` : pxstr;
 }
 
-// function getRandomNumString() {
-//     return Math.floor(Math.random() * 1000000000).toString().replace(/(\d)/g, `$1 `).repeat(3);
-// }
-
-// function getRandomNumString(cols) {
-//     return Array(cols).fill(0).map(x => Math.floor(Math.random() * 10).toString() + ` `).join(``);
-// }
-
 function getRowOfRandomNums(cols) {
     let row = document.createElement(`div`);
     let spans = Array(cols).fill(0).map(x => {
@@ -61,8 +53,8 @@ function getRowOfRandomNums(cols) {
         span.innerText = Math.floor(Math.random() * 10).toString() + ` `;
 
         let n = Math.random() * 100;
-        if (n > 3 && n < 15) {
-            if (n == 14) {
+        if (n > 3 && n < 10) {
+            if (n == 9) {
                 span.style.filter = `blur(5px)`;
                 span.style.color = `#dfffe2`;
             }
@@ -77,6 +69,7 @@ function getRowOfRandomNums(cols) {
     return row;
 }
 
+// Make a flashing, glowing block
 function runPhase2() {
     tick = 0;
     block.style.opacity = 1;
@@ -87,18 +80,19 @@ function runPhase2() {
             block.style.opacity = 1;
             runPhase3();
         }
-    }, 500);
+    }, 300);
 }
 
+// Make text type across screen like a teletype machine
 function runPhase3() {
     tick = 0;
     clock = setInterval(_ => {
-        teletype.appendChild(p1_chars[tick++]);
+        teletype.insertBefore(p1_chars[tick++], block);
         if (tick >= p1_chars.length) {
             clearInterval(clock);
             runPhase4();
         }
-    }, 100);
+    }, 40);
 }
 
 function runPhase4() {
