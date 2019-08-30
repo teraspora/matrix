@@ -11,10 +11,10 @@ const p1_chars = PHRASE1.split(``).map(char => {
     return span;
 });
 
-const LINE_COUNT = 50;
+const LINE_COUNT = 70;
 const COL_COUNT = 28;
 let num_lines = makeNumLines(LINE_COUNT);     // an array of 50 num_line divs
-const DROP_COUNT = 72;  // number of times lines drop before timer cleared
+const DROP_COUNT = 92;  // number of times lines drop before timer cleared
 let tick = 0;
 const block = document.getElementById(`block`);
 const teletype = document.getElementById(`teletype`);
@@ -41,7 +41,7 @@ let clock = setInterval(_ => {
 
 // create an array of `nums` divs
 function makeNumLines(line_count = 1) {
-    return Array(line_count).fill(0).map(item => getRowOfRandomNums(COL_COUNT));``
+    return Array(line_count).fill(0).map(item => getRowOfRandomNums(COL_COUNT));
 }
 
 // Given a pixel string, e.g.`512px`, and an increment, e.g. 32, return an incremented pixel string: `544px`

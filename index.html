@@ -13,7 +13,11 @@
     <div id="teletype">
         <span id="block">&#9724;</span>
     </div>
-    <img id="pills" src="images/pills.png" alt="">
+    <img id="pills" src="images/pills.png" alt="" usemap="#pillmap">
+    <map name="pillmap">
+        <area shape="circle" coords="275, 254, 45" href="javascript:history.go(0)" alt="">
+        <area shape="circle" coords="680, 273, 40" href="javascript:history.back()" alt="">
+    </map>
     <script type="text/javascript" src="scripts/main.js"></script>
 </body>
 </html>
