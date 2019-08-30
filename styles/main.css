@@ -366,18 +366,8 @@ body {
     background: #000;
     color: #0055ff;
     font-size: 25vw;
-    display: grid;
-    grid-template-columns: repeat( 3, minmax(128px, 1fr) );
-}
-
-#overlay {
-    opacity: 0;
-    position: fixed;
-    left: 45vw;
-    bottom: 5vh;
-    font-size: 4vw;
-    color: #00ff34;
-    transition: opacity 6s; 
+    /*display: grid;*/
+    /*grid-template-columns: repeat( 3, minmax(128px, 1fr) );*/
 }
 
 .nums {
@@ -390,6 +380,9 @@ body {
     filter: blur(3px) drop-shadow(24px 16px 20px #fff);
     -webkit-filter: blur(3px);
     -o-filter: blur(3px);
+    transform-origin: left center;
+    overflow-x: hidden;
+
 }
 
 #teletype {
@@ -400,12 +393,12 @@ body {
 }
 
 #teletype > span:not(:last-child) {
-  font-size: 2.8vw;
-  font-weight: bold;
-  color: #5aff61;
-  opacity: 1;
-  filter: blur(3px) contrast(200%) brightness(250%);
-  text-shadow: 0 0 80px #3aff51;
+    font-size: 2.8vw;
+    font-weight: bold;
+    color: #5aff61;
+    opacity: 1;
+    filter: blur(3px) contrast(200%) brightness(250%);
+    text-shadow: 0 0 80px #3aff51;
 }
 
 #block {
@@ -421,7 +414,13 @@ body {
     transition: opacity 0.1s ease-in;   
 }
 
-/*.spacer {
-  display: inline-block;
-  margin-right: 3vw;
-}*/
+#pills {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 5s ease-in-out;
+}
+
