@@ -3,7 +3,7 @@
 const D = new Date();
 const TIME = D.toTimeString().slice(0, 8);
 const DATE = D.toLocaleDateString().replace(/\//g, `-`);
-const PHRASE1 = `Call trans opt: received. ${DATE} ${TIME} REC:Log>     \nTrace program: running          \n:Fatal error: code 404     :option: red / blue?`;
+const PHRASE1 = `Call trans opt: received. ${DATE} ${TIME} REC:Log>        \nTrace program: running          \n:Fatal error: code 404     :option: red / blue?`;
 // const PHRASE1 = `Call trans opt: received. 2-19-98 13:24:18 REC:Log>`;
 const p1_chars = PHRASE1.split(``).map(char => {
     let span = document.createElement(`span`);
